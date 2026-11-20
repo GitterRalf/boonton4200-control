@@ -1,0 +1,95 @@
+QMainWindow, QDialog, QWidget#workspace, QWidget#sidebar { background: #10151e; color: #e8f0fb; }
+QMenuBar, QMenu { background: #192331; color: #e8f0fb; }
+QMenuBar::item { padding: 5px 11px; background: transparent; }
+QMenuBar::item:selected, QMenu::item:selected { background: #33536d; }
+QMenu::item { padding: 6px 24px; }
+QMenu::item:disabled { color: #8896a9; }
+QMessageBox { background: #171f2b; }
+QLabel, QCheckBox { color: #e8f0fb; }
+QLabel#title { font-size: 27px; font-weight: 700; }
+QLabel#quiet { color: #a3b3c8; }
+QLabel#status { color: #c8d7e9; padding: 9px 12px; background: #192331; border-radius: 7px; }
+QLabel#statusError { color: #ffd2c9; padding: 9px 12px; background: #442724; border-radius: 7px; }
+QFrame#plotPanel {
+    background: #171f2b; border: 1px solid #2c3a4c; border-radius: 10px;
+}
+
+
+
+
+
+
+
+
+
+QPushButton, QComboBox, QSpinBox, QDoubleSpinBox {
+    min-height: 27px; padding: 4px 9px; border: 1px solid #3b4b60;
+    border-radius: 6px; background: #222e3e; color: #e8f0fb;
+}
+QComboBox QAbstractItemView { background: #222e3e; color: #e8f0fb; selection-background-color: #33536d; }
+QPushButton:hover { background: #2a3b50; }
+QPushButton:focus, QComboBox:focus, QSpinBox:focus, QDoubleSpinBox:focus { border-color: #62c7ff; }
+QPushButton#primary { color: #102238; background: #77ccff; border-color: #77ccff; font-weight: 700; }
+QPushButton#primary:hover { background: #a2dcfd; }
+QPushButton:disabled, QPushButton#primary:disabled, QComboBox:disabled, QSpinBox:disabled, QDoubleSpinBox:disabled, QCheckBox:disabled {
+    background: #1c2531; color: #8896a9; border-color: #2b3849;
+}
+
+
+
+
+
+QAbstractSpinBox { padding-right: 30px; }
+QAbstractSpinBox::up-button, QAbstractSpinBox::down-button {
+    subcontrol-origin: border;
+    width: 23px;
+    margin-right: 1px;
+    background: #344e68;
+    border-left: 1px solid #617a94;
+}
+QAbstractSpinBox::up-button {
+    subcontrol-position: top right;
+    margin-top: 1px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #617a94;
+}
+QAbstractSpinBox::down-button {
+    subcontrol-position: bottom right;
+    margin-bottom: 1px;
+    border-bottom-right-radius: 5px;
+}
+QAbstractSpinBox::up-button:hover, QAbstractSpinBox::down-button:hover { background: #466781; }
+QAbstractSpinBox::up-button:pressed, QAbstractSpinBox::down-button:pressed { background: #26394e; }
+QAbstractSpinBox::up-button:disabled, QAbstractSpinBox::down-button:disabled, QAbstractSpinBox::up-button:off, QAbstractSpinBox::down-button:off { background: #23313f; }
+QAbstractSpinBox::up-arrow, QAbstractSpinBox::down-arrow { width: 11px; height: 7px; }
+QAbstractSpinBox::up-arrow { image: url(:/spin-up.xpm); }
+QAbstractSpinBox::down-arrow { image: url(:/spin-down.xpm); }
+QAbstractSpinBox::up-arrow:disabled, QAbstractSpinBox::up-arrow:off { image: url(:/spin-up-inactive.xpm); }
+QAbstractSpinBox::down-arrow:disabled, QAbstractSpinBox::down-arrow:off { image: url(:/spin-down-inactive.xpm); }
+QFrame#card, QFrame#meter {
+    background: #171f2b; border: 1px solid #304156; border-radius: 12px;
+}
+QFrame#meter { background: #182638; }
+QLabel#sectionTitle { font-size: 16px; font-weight: 650; }
+QLabel#measurementValue { color: #99dbff; font-size: 46px; font-weight: 650; }
+QLabel#measurementUnit { color: #b2d8f2; font-size: 19px; font-weight: 650; }
+QLabel#measurementInfo { color: #a3b3c8; }
+QLabel#linkState {
+    color: #bfcfe3; background: #192331; border: 1px solid #3b4b60;
+    border-radius: 13px; padding: 5px 12px; font-weight: 650;
+}
+QLabel#linkState[connected="true"] { color: #b8ead1; background: #1c3935; border-color: #3a615a; }
+QPushButton#connectDevice[primary="true"] { color: #102238; background: #77ccff; border-color: #77ccff; font-weight: 700; }
+QPushButton#connectDevice[primary="true"]:hover { background: #a2dcfd; }
+QPushButton#connectDevice[primary="true"]:disabled { color: #8896a9; background: #1c2531; border-color: #2b3849; }
+
+QCheckBox#autoRefresh { spacing: 7px; }
+QCheckBox#autoRefresh::indicator {
+    width: 16px; height: 16px;
+    background: #344e68; border: 1px solid #819bb5; border-radius: 4px;
+}
+QCheckBox#autoRefresh::indicator:checked {
+    background: #216293; border-color: #91c5e9; image: url(:/auto-refresh-check.xpm);
+}
+QCheckBox#autoRefresh::indicator:hover, QCheckBox#autoRefresh::indicator:focus { border-color: #b8e4ff; }
+QCheckBox#autoRefresh::indicator:disabled { background: #263544; border-color: #63788e; }
