@@ -4,13 +4,9 @@ Eigenständige Windows-Anwendung für den Boonton 4200 HF-Leistungsmesser. Die B
 
 ## Bildschirmaufnahmen
 
-### Helle Ansicht
-
-![Boonton 4200 Control in der hellen Ansicht](docs/screenshots/boonton4200-hell.png)
-
-### Dunkle Ansicht
-
-![Boonton 4200 Control in der dunklen Ansicht](docs/screenshots/boonton4200-dunkel.png)
+| Hell | Dunkel |
+| --- | --- |
+| <a href="docs/screenshots/boonton4200-hell.png"><img src="docs/screenshots/boonton4200-hell.png" alt="Boonton 4200 Control in der hellen Ansicht" width="400"></a> | <a href="docs/screenshots/boonton4200-dunkel.png"><img src="docs/screenshots/boonton4200-dunkel.png" alt="Boonton 4200 Control in der dunklen Ansicht" width="400"></a> |
 
 ## Installation unter Windows
 
