@@ -2,6 +2,8 @@
 
 Eigenständige Windows-Anwendung für den Boonton 4200 HF-Leistungsmesser. Die Bedienoberfläche verwendet Qt Widgets, der Messverlauf Qwt 6.3 und die IEEE-488-Kommunikation den installierten NI-488.2-Treiber mit Unterstützung für die Programmarchitektur.
 
+Entwickelt und gepflegt von Ralf Tralow mit Unterstützung von OpenAI Codex.
+
 ## Bildschirmaufnahmen
 
 | Hell | Dunkel |
