@@ -1,6 +1,6 @@
 # Boonton 4200 Control
 
-Eigenständige Windows-Anwendung für den Boonton 4200 HF-Leistungsmesser. Die Bedienoberfläche verwendet Qt 6 Widgets, der Messverlauf Qwt 6.3 und die IEEE-488-Kommunikation den installierten 64-Bit-Treiber NI-488.2.
+Eigenständige Windows-Anwendung für den Boonton 4200 HF-Leistungsmesser. Die Bedienoberfläche verwendet Qt Widgets, der Messverlauf Qwt 6.3 und die IEEE-488-Kommunikation den installierten NI-488.2-Treiber mit Unterstützung für die Programmarchitektur.
 
 ## Bildschirmaufnahmen
 
@@ -10,7 +10,7 @@ Eigenständige Windows-Anwendung für den Boonton 4200 HF-Leistungsmesser. Die B
 
 ## Installation unter Windows
 
-Das 64-Bit-Setup mit Qt-, Qwt- und MinGW-Laufzeitdateien steht im [GitHub-Release](https://github.com/GitterRalf/boonton4200-control/releases/latest) bereit. Für den Download ist ein GitHub-Konto mit Zugriff auf das private Repository erforderlich. Standardordner ist `C:\Programme\Boonton 4200 Control`. Den 64-Bit-Treiber NI-488.2 separat installieren.
+Die Setups für x86 und x64 mit Qt-, Qwt- und MinGW-Laufzeitdateien stehen im [GitHub-Release](https://github.com/GitterRalf/boonton4200-control/releases/latest) bereit. Für den Download ist ein GitHub-Konto mit Zugriff auf das private Repository erforderlich. Standardordner ist `C:\Programme\Boonton 4200 Control`. Den NI-488.2-Treiber mit Unterstützung für die Programmarchitektur separat installieren.
 
 ## Bedienung
 
@@ -26,17 +26,34 @@ Das Protokoll folgt Anhang A und B des Boonton-4200-Handbuchs, insbesondere den 
 
 ## Bauen und starten
 
-Die Version steht in [version.h](version.h). In Qt Creator lässt sich die CMakeLists.txt direkt öffnen. Benötigt werden ein 64-Bit-Windows-Kit mit Qt 6 Widgets, Qt Network, LinguistTools und [Qwt 6.3](https://qwt.sourceforge.io/qwtinstall.html) für dasselbe Kit. Die lokale Qwt-Installation liegt unter `.deps/qwt`. Ein anderer Pfad lässt sich mit `-DQWT_ROOT=…` einstellen. Für einen Build ohne **About Qt** `-DBOONTON_QT_COMMUNITY=OFF` setzen.
+Die Version steht in [version.h](version.h). In Qt Creator lässt sich die CMakeLists.txt direkt öffnen. Benötigt werden ein 64-Bit-Windows-Kit mit Qt Widgets, Qt Network, LinguistTools und [Qwt 6.3](https://qwt.sourceforge.io/qwtinstall.html) für dasselbe Kit. Die lokale Qwt-Installation liegt unter `.deps/qwt` für x64 und `.deps/qwt-qt5-x86` für x86. Ein anderer Pfad lässt sich mit `-DQWT_ROOT=…` einstellen. Für einen Build ohne **About Qt** `-DBOONTON_QT_COMMUNITY=OFF` setzen.
 
 Mit dem auf diesem Rechner installierten Qt-MinGW-Kit im Projektordner aufrufen:
 
 ```powershell
-.\build.ps1
+.\build.ps1                    # x64
+.\build.ps1 -Architecture x86  # x86
 ```
 
 Das Skript benötigt CMake 3.24 oder neuer und Ninja. Beim Pfad **Messgeräte** verwendet es während des Builds einen vorübergehenden Laufwerksalias, weil die installierten MinGW- und Qt-Werkzeuge dort mit dem Umlaut scheitern. Quellen und Build-Ausgabe liegen im normalen Projektordner. Abweichende Installationspfade lassen sich über `-QtKit` und `-CompilerBin` angeben.
 
 Danach `build\Boonton4200-Control.exe` starten. Für das Windows-Setup anschließend `Boonton4200-Control.iss` mit Inno Setup kompilieren. Es übernimmt Programmversion und Icon aus dem Projekt und legt die Setupdatei unter `installer` ab.
+
+
+### Windows-Architekturen
+
+Die x86-Ausgabe verwendet Qt 5.15.19 mit MinGW 8.1 und hat einen eigenen
+Installationsordner **Boonton 4200 Control (32 Bit)**. Auf 64-Bit-Windows können beide
+Ausgaben parallel installiert werden. Die x64-Ausgabe verwendet weiterhin
+Qt 6 und ist beim Build der Standard.
+
+Der Build für x86 nutzt `build-x86`, der Build für x64 den Ordner `build`.
+Die Installer entstehen im Projektordner mit folgenden Aufrufen.
+
+```powershell
+ISCC.exe Boonton4200-Control.iss
+ISCC.exe /DBuildArch=x86 Boonton4200-Control.iss
+```
 
 ## Lizenz
 

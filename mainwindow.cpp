@@ -181,7 +181,7 @@ void MainWindow::createMenus()
     clearHistoryAction = localized(file->addAction(QString(), this, &MainWindow::clearHistory),
                                    QT_TR_NOOP("Verlauf leeren"));
     file->addSeparator();
-    localized(file->addAction(QString(), QKeySequence::Quit, this, &QWidget::close), QT_TR_NOOP("&Beenden"));
+    localized(file->addAction(QString(), this, &QWidget::close, QKeySequence::Quit), QT_TR_NOOP("&Beenden"));
 
     auto *settings = localized(bar->addMenu(QString()), QT_TR_NOOP("&Einstellungen"), &QMenu::setTitle);
     settings->setObjectName(QStringLiteral("settingsMenu"));
@@ -199,7 +199,7 @@ void MainWindow::createMenus()
         connect(action, &QAction::triggered, this, [this, dark] { setDarkTheme(dark); });
     }
     settings->addSeparator();
-    auto *save = localized(settings->addAction(QString(), QKeySequence::Save, this, &MainWindow::saveSettings),
+    auto *save = localized(settings->addAction(QString(), this, &MainWindow::saveSettings, QKeySequence::Save),
                            QT_TR_NOOP("Einstellungen speichern"));
     save->setObjectName(QStringLiteral("saveSettings"));
 
@@ -390,7 +390,7 @@ QWidget *MainWindow::createControls()
     automatic->addWidget(interval);
     measure->addLayout(automatic);
     connect(autoRefresh, &QCheckBox::toggled, this, &MainWindow::updateControls);
-    connect(interval, &QSpinBox::valueChanged, this, [this] {
+    connect(interval, qOverload<int>(&QSpinBox::valueChanged), this, [this] {
         refreshTimer.stop();
         updateControls();
     });
@@ -424,7 +424,7 @@ QWidget *MainWindow::createControls()
     }
     channel->addWidget(channelBox, 1);
     control->addWidget(channelRow);
-    connect(channelBox, &QComboBox::activated, this, [this](int index) {
+    connect(channelBox, qOverload<int>(&QComboBox::activated), this, [this](int index) {
         start(Operation::Channel, channelBox->itemData(index).toInt());
     });
 
@@ -709,7 +709,7 @@ void MainWindow::updatePlot()
     QVector<QPointF> points;
     points.reserve(static_cast<qsizetype>(history.size()));
     for (const auto &point : history) {
-        points.emplaceBack(point.seconds, point.reading.value);
+        points.append(QPointF(point.seconds, point.reading.value));
     }
     curve->setSamples(points);
     if (history.empty()) {

@@ -9,11 +9,24 @@
 #define IconResource FileOpen(SourcePath + "assets\app.rc")
 #define Boonton4200Icon ReadQuoted(FileRead(IconResource))
 #expr FileClose(IconResource)
-#define Boonton4200Name "Boonton 4200 Control"
+#ifndef BuildArch
+  #define BuildArch "x64"
+#endif
+#if BuildArch == "x86"
+  #define Boonton4200Name "Boonton 4200 Control (32 Bit)"
+  #define DeviceAppId "{{CCD69C52-9E53-58F3-A90B-E5D43D59917F}"
+  #define DeviceBuildDir "build-x86"
+#elif BuildArch == "x64"
+  #define Boonton4200Name "Boonton 4200 Control"
+  #define DeviceAppId "{{6FC1B2AE-DC1B-4F3A-A889-E992E5CF27A0}"
+  #define DeviceBuildDir "build"
+#else
+  #error BuildArch must be x86 or x64.
+#endif
 #define Boonton4200Exe "Boonton4200-Control.exe"
 
 [Setup]
-AppId={{6FC1B2AE-DC1B-4F3A-A889-E992E5CF27A0}
+AppId={#DeviceAppId}
 AppName={#Boonton4200Name}
 AppVersion={#Boonton4200Version}
 AppVerName={#Boonton4200Name} {#Boonton4200Version}
@@ -24,13 +37,17 @@ DefaultDirName={pf}\{#Boonton4200Name}
 DefaultGroupName={#Boonton4200Name}
 AllowNoIcons=yes
 PrivilegesRequired=admin
+#if BuildArch == "x64"
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
+#else
+ArchitecturesAllowed=x86 x64
+#endif
 ; Inno 5.3.5 can see modern Windows as 6.2 due to its legacy manifest.
 SetupIconFile=assets\{#Boonton4200Icon}
 UninstallDisplayIcon={app}\{#Boonton4200Exe}
 OutputDir=installer
-OutputBaseFilename=Boonton4200-Control-Setup-{#Boonton4200Version}-x64
+OutputBaseFilename=Boonton4200-Control-Setup-{#Boonton4200Version}-{#BuildArch}
 Compression=lzma
 SolidCompression=yes
 
@@ -43,15 +60,19 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; Flags: unchecked
 
 [Files]
-Source: "build\{#Boonton4200Exe}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "build\*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "build\generic\*.dll"; DestDir: "{app}\generic"; Flags: ignoreversion
-Source: "build\iconengines\*.dll"; DestDir: "{app}\iconengines"; Flags: ignoreversion
-Source: "build\imageformats\*.dll"; DestDir: "{app}\imageformats"; Flags: ignoreversion
-Source: "build\networkinformation\*.dll"; DestDir: "{app}\networkinformation"; Flags: ignoreversion
-Source: "build\platforms\*.dll"; DestDir: "{app}\platforms"; Flags: ignoreversion
-Source: "build\styles\*.dll"; DestDir: "{app}\styles"; Flags: ignoreversion
-Source: "build\tls\*.dll"; DestDir: "{app}\tls"; Flags: ignoreversion
+#if BuildArch == "x86"
+Source: "{#DeviceBuildDir}\qt.conf"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DeviceBuildDir}\bearer\*.dll"; DestDir: "{app}\bearer"; Flags: ignoreversion skipifsourcedoesntexist
+#endif
+Source: "{#DeviceBuildDir}\{#Boonton4200Exe}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DeviceBuildDir}\*.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DeviceBuildDir}\generic\*.dll"; DestDir: "{app}\generic"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#DeviceBuildDir}\iconengines\*.dll"; DestDir: "{app}\iconengines"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#DeviceBuildDir}\imageformats\*.dll"; DestDir: "{app}\imageformats"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#DeviceBuildDir}\networkinformation\*.dll"; DestDir: "{app}\networkinformation"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#DeviceBuildDir}\platforms\*.dll"; DestDir: "{app}\platforms"; Flags: ignoreversion
+Source: "{#DeviceBuildDir}\styles\*.dll"; DestDir: "{app}\styles"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#DeviceBuildDir}\tls\*.dll"; DestDir: "{app}\tls"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "THIRD-PARTY-NOTICES.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "licenses\*.txt"; DestDir: "{app}\licenses"; Flags: ignoreversion
